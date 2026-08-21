@@ -1,0 +1,10 @@
+{
+  "$schema": "https://code.claude.com/schemas/plugin.json",
+  "name": "kaneky-delegation",
+  "version": "0.1.0",
+  "description": "Claude Code skill for getting reliable work out of subagents you do not trust — the report is not the check.",
+  "author": {
+    "name": "kan3ky",
+    "url": "https://github.com/kan3ky"
+  }
+}
