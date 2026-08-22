@@ -55,6 +55,7 @@ delegating at all.
 | **Two agents editing one file "in parallel"** | Independence is a property of what gets read and written, not of how the task description divides. Overlapping writes produce silent last-write-wins, not an error. |
 | **A subagent that built everything in memory, then crashed before writing it** | Incremental, durable output turns a transport failure into "resume from file twelve." A single end-of-run write turns the same failure into a total loss. |
 | **A delegate looping on a step it can't resolve, instead of naming the gap** | The default completion behavior fills a gap with something plausible rather than leaving it visibly empty — unless the brief explicitly asks for the honest gap instead. |
+| **A delegate faithfully relaying hostile content it read** | The delegate did its job, so every check for accuracy passes. Its report still lands in the orchestrator's context — the process holding the tools the delegate was denied, and the one that commits. |
 | **A fan-out that costs more than the task would have cost directly** | The overhead of briefing, verifying, and recovering delegated work is real and sometimes exceeds just doing it — a cost worth checking, not assuming away because delegation was the plan. |
 
 ## The idea behind it
