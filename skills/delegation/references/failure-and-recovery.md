@@ -81,6 +81,16 @@ not an edge case, design the task to survive being interrupted at any point:
   because "twelve of forty files exist" is a recoverable, checkable state and
   "the JSON array is truncated after entry twelve" usually is not.
 
+This trades against atomicity, and the trade is worth naming. Where a consumer
+must see the result as one consistent snapshot — a dataset, a config, anything
+read as a unit — forty files means a reader can catch it half-written, which is
+its own failure and a quieter one. Both properties are available together: have
+the delegate checkpoint incrementally to a working directory, then publish the
+finished artifact in one atomic step (write a temporary file, validate it,
+rename it into place). Resumability comes from the checkpoints, all-or-nothing
+visibility from the rename. Reach for that whenever a partial result would be
+read as a complete one.
+
 ## 4. When to stop resuming and re-scope
 
 Resuming is the right default, but not unconditionally. Stop resuming and

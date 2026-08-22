@@ -97,9 +97,17 @@ not depend on anybody noticing anything.
 
 ## What does not work, and why it is tempting
 
-**Asking the agent whether it stayed on task.** It will say yes, sincerely. The
-whole failure is that its account of its work is accurate — self-assessment is
-the one instrument that cannot see this.
+**Asking the agent whether it stayed on task.** It will say yes, sincerely,
+and it will be right: its account of its work is accurate, which is the whole
+failure.
+
+Note the word *task*. This is not a contradiction of the advice above to state
+the goal — it is why that advice is worth the tokens. Self-assessment against
+the task is circular, because the task is what drifted. Self-assessment against
+a separately stated goal is a different question with a different answer, and
+it is the only form of self-report that can catch this: an agent holding both
+can notice they have come apart. What you cannot do is ask "did you do what I
+asked" and learn anything, when doing what you asked is the problem.
 
 **Budgets.** A step or time cap bounds how far a drifted run gets. It says
 nothing about direction, and a drifted agent that finishes early passes every

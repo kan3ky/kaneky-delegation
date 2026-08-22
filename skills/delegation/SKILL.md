@@ -91,8 +91,17 @@ day.
 
 ## 4. Parallelise on independence, not ambition
 
-Agents touching disjoint files or disjoint resources run concurrently and
-safely — their outputs cannot collide, so there is nothing to reconcile.
+Agents touching disjoint files or disjoint resources can run concurrently
+without overwriting each other — no two writes land on the same target, so
+nothing is silently lost.
+
+That is narrower than "safely", and the gap matters. Disjointness rules out the
+collision; it does not rule out a conflict. Two agents editing separate files
+can each produce a clean change and still break the build together, through a
+shared interface, a schema, a dependency version, a generated artifact, a test
+they both assumed. File-level independence removes last-write-wins; it does not
+remove the need to integrate and test the aggregate, and a fan-out whose slices
+all pass individually can still fail as a whole.
 Agents that might touch the *same* file, the same record, or the same shared
 state are not a parallelization opportunity; they are a race, and the result
 you get back is whichever agent's write landed last, silently overwriting
