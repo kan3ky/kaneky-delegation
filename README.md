@@ -8,8 +8,9 @@
 A Claude Code skill for getting reliable work out of subagents you do not
 trust — writing briefs precise enough to produce good work on the first
 pass, checking delegated work without reading the report, picking the
-cheapest model that clears the bar, and recovering when a delegated run
-fails partway through.
+cheapest model that clears the bar, spotting a delegate that followed the
+brief exactly and still did the wrong thing, and recovering when a run fails
+partway through.
 
 Most delegation advice stops at "spawn an agent and read what it says." This
 covers what happens after: the report says "all tests pass" because that's
@@ -37,6 +38,8 @@ Write a brief for a subagent to migrate this data format.
 This subagent's report says all tests pass — how do I actually check that?
 Can these three research tasks run in parallel safely?
 This delegated run died halfway through a 40-file generation — now what?
+All twelve subagents agree — does that mean anything?
+The subagent kept the suite green by deleting a test. How do I catch that earlier?
 Should this task even be delegated, or is it faster to just do it?
 ```
 
@@ -62,7 +65,7 @@ delegating at all.
 
 ## The idea behind it
 
-Every item shares one shape:
+Most of the list shares one shape:
 
 > **A confident report and a correct result are indistinguishable in text.**
 
@@ -72,16 +75,25 @@ about the sentence changes based on whether it's true — which means the
 sentence itself is never the evidence. The evidence is whatever you check
 yourself, against the artifact, after the report arrives.
 
-The skill is a set of ways to make that check cheap enough to actually do
-every time: a brief precise enough that there's less to check, a
-verification habit that looks at properties instead of process, and a
-recovery design that assumes the run will fail partway at some point and
-survives it when it does.
+Two of the rows are worse than that, and they are the reason the skill does
+not stop at "verify the report." In those, the report is **accurate**. The
+delegate that deleted the failing test reported honestly that the suite is
+green. The delegate that relayed a poisoned document relayed it faithfully.
+Checking the report against the artifact confirms both, because both did what
+they said. What is wrong is upstream — the brief named a proxy for the goal, or
+the delegate read something you did not control — and no amount of verifying
+the work catches a correct answer to the wrong question.
+
+So the skill runs in both directions: down from the brief, making the task
+precise enough that a correct execution is also the right one, and up from the
+result, checking artifacts rather than claims. Plus a recovery design that
+assumes a long run will fail partway at some point, because it will.
 
 ## Scope
 
-Covers briefing, verification, model selection, parallelization safety, and
-failure recovery for delegated work in any orchestration setup — a
+Covers briefing, verification, model selection, parallelization safety, goal
+drift, untrusted delegate output, and failure recovery for delegated work in
+any orchestration setup — a
 Task-style subagent tool, an SDK agent loop, or a hand-rolled orchestrator.
 It does not ship a specific harness, a specific model router, or a specific
 CI integration; it is the reasoning that applies before you wire any of
