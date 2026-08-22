@@ -56,6 +56,8 @@ delegating at all.
 | **A subagent that built everything in memory, then crashed before writing it** | Incremental, durable output turns a transport failure into "resume from file twelve." A single end-of-run write turns the same failure into a total loss. |
 | **A delegate looping on a step it can't resolve, instead of naming the gap** | The default completion behavior fills a gap with something plausible rather than leaving it visibly empty — unless the brief explicitly asks for the honest gap instead. |
 | **A delegate faithfully relaying hostile content it read** | The delegate did its job, so every check for accuracy passes. Its report still lands in the orchestrator's context — the process holding the tools the delegate was denied, and the one that commits. |
+| **A delegate that did exactly what the brief said, and the brief named a proxy** | "Keep the suite green" is satisfied by deleting the failing test. Every step defensible, trace clean, report honest — no check asking "did it do what it was told" can see it. |
+| **Twelve subagents agreeing with each other** | Agents briefed from one template drift the same way. Consensus reads as corroboration when the reports contain one decision between them, made once, in the brief. |
 | **A fan-out that costs more than the task would have cost directly** | The overhead of briefing, verifying, and recovering delegated work is real and sometimes exceeds just doing it — a cost worth checking, not assuming away because delegation was the plan. |
 
 ## The idea behind it

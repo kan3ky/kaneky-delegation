@@ -159,6 +159,47 @@ What follows:
   to both failure modes at once: it does not care whether the report was
   mistaken or manipulated, because it never read the report.
 
+## 7. A delegate can also do exactly what you asked, and be wrong
+
+The two failures above are both about the report. This one is about the work:
+the report is accurate, the brief was followed, and the result is not what you
+wanted — because the brief named a proxy and the goal was something else.
+
+Told "keep the suite green", an agent that deletes the failing test satisfied
+the instruction and defeated its purpose. Every step defensible, trace clean,
+report honest. No check that asks "did the delegate do what it was told" can
+see it.
+
+Across a fan-out it compounds, and the aggregate hides it. No single trace
+looks wrong; the divergence is *between* slices, and reading across them is the
+work the fan-out existed to avoid. Worse, agents briefed from a common template
+drift the same way and therefore agree with each other — so a reviewer counting
+consensus reads twelve reports as corroboration when they contain one decision
+between them, made once, in the brief. Independence has to be a property of the
+agents' inputs, not of their process.
+
+Three things help, and one of them is free:
+
+- **State the goal, not only the task.** A delegate that knows why can report
+  "the task as written would not achieve this", which is the most valuable
+  sentence it can produce — and it cannot produce it if it was never told.
+- **Make non-goals explicit.** They are unguessable, and they are where the
+  drift budget is spent. "Do not modify tests" closes a direction an agent
+  would otherwise treat as helpful.
+- **Check the aggregate for divergence before checking any single result.**
+  Read across slices for what should be identical and is not. Cheaper than
+  reading every report, and it finds what reading them one at a time cannot.
+
+Asking the agent whether it stayed on task does not work: it will say yes,
+sincerely, because its account of its work is accurate. Self-assessment is the
+one instrument blind to this. Budgets do not work either — they bound how far a
+drifted run gets, not its direction, and a drifted agent that finishes early
+passes every budget cleanly.
+
+What holds without anyone noticing anything is §3's boundary. Drift produces
+bad artifacts; it produces bad deployments only if the drifted agent can also
+ship. See `references/drift.md`.
+
 ## Review checklist
 
 Before delegating:
@@ -170,6 +211,10 @@ Before delegating:
 - [ ] Are non-goals stated, so the delegate does not "helpfully" expand scope?
 - [ ] Does the brief say what to do when blocked — name the gap, never invent
       a plausible fill?
+- [ ] Does the brief state the GOAL and not only the task, so the delegate can
+      tell you the task as written will not achieve it?
+- [ ] Are non-goals written down? They are unguessable, and "while I was in
+      there" is a plausible continuation of almost any task.
 - [ ] Is this the cheapest model that can clear the bar for *this* task, given
       how much of it is mechanical versus how much turns on judgment?
 - [ ] If parallel, are the agents' file/resource sets actually disjoint?
@@ -181,6 +226,12 @@ After the delegate reports back:
 - [ ] Have you re-run the check yourself, rather than trusting the summary?
 - [ ] Did you verify the property the task was supposed to produce, not that
       the process ran?
+- [ ] Did any check close on the original GOAL? "The suite is green" is a task
+      check; "green and still covering yesterday's behaviour" is a goal check,
+      and only the second notices a deleted test.
+- [ ] Across a fan-out: did you read the slices against each other for
+      divergence, before reading any one of them closely? Agents briefed from
+      one template agree with each other, so agreement is not corroboration.
 - [ ] Did you spot-check the hardest case in the output, not just the first
       one you looked at?
 - [ ] For anything public or externally visible, did you personally run the
@@ -213,6 +264,10 @@ After the delegate reports back:
   checks instead of reading claims, verifying properties instead of process,
   where to spot-check, and the specific hazard of a delegate's self-reported
   numbers.
+- `references/drift.md` — the delegate that did what you asked and not what
+  you wanted: where drift comes from, why a fan-out hides it and a synthesiser
+  launders it, re-briefing mid-run, verifying against the goal rather than the
+  task, and why self-assessment and budgets both fail to detect it.
 - `references/failure-and-recovery.md` — how delegated runs fail differently
   from single-threaded work, how to resume instead of restart, designing for
   resumability, and recognizing when a delegation loop costs more than doing
