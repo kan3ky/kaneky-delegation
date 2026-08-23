@@ -114,13 +114,10 @@ ones that pass review, deploy green, and are wrong anyway.
 /plugin marketplace add kan3ky/kaneky-skills
 ```
 
-Published so far:
-
-- **[kaneky-agent-guardrails](https://github.com/kan3ky/kaneky-agent-guardrails)** — what a caller can be talked into using, and why absence beats refusal
-
-The [collection](https://github.com/kan3ky/kaneky-skills) lists the rest, which
-are written and not yet published. They are named there without links, because
-a link to a repository that does not exist is the defect these skills are about.
+The [collection](https://github.com/kan3ky/kaneky-skills) lists every skill and
+marks which are published. The unpublished ones are named there without links,
+because a link to a repository that does not exist is the defect these skills
+are about.
 
 ## Licence
 
